@@ -3,7 +3,7 @@ import { Island } from '../services/poi-interfaces';
 import { IslandService } from '../services/island-service';
 
 @inject(IslandService)
-export class Users {
+export class Islands {
   islands: Island[];
 
   constructor(private ds: IslandService) {

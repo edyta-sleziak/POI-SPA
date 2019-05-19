@@ -74,6 +74,27 @@ export class IslandService {
     //this.ea.publish(new Marker(this.total, newIsland))
   }
 
+  async getUsersIslands(userId: string) {
+    const id = userId;
+    const response = await this.httpClient.get('/api/poi/'+id+'/userAdded');
+    return response.content;
+  }
+
+  async editUser(firstName: string, lastName: string, password: string) {
+    const newDetails = {
+      firstName: firstName,
+      lastName: lastName,
+      password: password
+    };
+    //const response = await this.httpClient.put('/api/user/update', newDetails); //to do on server side
+    //return response.content;
+  }
+
+  async deleteUser(user: User) {
+    const userId = user._id;
+    const response = await this.httpClient.delete('/api/user/'+userId);
+  }
+
   async signup(firstName: string, lastName: string, email: string, password: string) {
     const user = {
       firstName: firstName,
@@ -90,6 +111,16 @@ export class IslandService {
     return false;
   }
 
+  async getLoggedUserData() {
+    try {
+      const response = await this.httpClient.get('/api/user/getLoggedUserData');
+      return response.content;
+    }
+    catch {
+      console.log('Error occurred');
+    }
+  }
+
   async login(email: string, password: string) {
     const response = await this.httpClient.post('/api/user/authenticate', {
       email: email,
@@ -100,6 +131,7 @@ export class IslandService {
       this.httpClient.configure(configuration => {
         configuration.withHeader('Authorization', 'bearer ' + status.token);
       });
+      console.log(status.token);
       localStorage.poi = JSON.stringify(response.content);
       await this.getIslands();
       await this.getUsers();
@@ -117,6 +149,7 @@ export class IslandService {
       configuration.withHeader('Authorization', '');
     });
     this.changeRouter(PLATFORM.moduleName('start'));
+    loggedUser = null;
   }
 
   changeRouter(module:string) {

@@ -3,7 +3,7 @@ import { Island, User } from '../services/poi-interfaces';
 import { IslandService } from '../services/island-service';
 
 @inject(IslandService)
-export class IslandView {
+export class IslandDetails {
   islands: Island[];
   user: User[];
 
