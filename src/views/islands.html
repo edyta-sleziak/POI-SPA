@@ -1,0 +1,15 @@
+<template>
+  <require from="../resources/elements/island-map"></require>
+  <require from="../resources/elements/island-form"></require>
+  <require from="../resources/elements/island-list"></require>
+
+  <div class="ui container">
+    <div class="ui segment">
+    <island-map></island-map>
+      <island-form name.bind="name", category.bind="category"></island-form>
+      <div class="ui stacked segment">
+        <island-list islands.bind="islands"></island-list>
+      </div>
+    </div>
+  </div>
+</template>

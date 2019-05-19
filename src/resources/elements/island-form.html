@@ -1,0 +1,20 @@
+<template>
+  <div class="column">
+    <form submit.trigger="addNewIsland()" class="ui form stacked segment">
+      <h3 class="ui dividing header"> Add new island </h3>
+      <div class="field">
+        <label>Name </label> <input value.bind="name">
+      </div>
+      <div class="field">
+        <label>Category </label> <input value.bind="category">
+      </div>
+      <div class="field">
+        <label>Latitude </label> <input value.bind="latitude">
+      </div>
+      <div class="field">
+        <label>Longitude </label> <input value.bind="longitude">
+      </div>
+      <button class="ui blue submit button">Add</button>
+    </form>
+  </div>
+</template>

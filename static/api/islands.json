@@ -1,0 +1,20 @@
+[
+  {
+    "name": "TestIsland1",
+    "category": "Big",
+    "latitude": "12112",
+    "longitude": "23232"
+  },
+  {
+    "name": "TestIsland2",
+    "category": "Small",
+    "latitude": "6766712",
+    "longitude": "65656"
+  },
+  {
+    "name": "TestIsland3",
+    "category": "Medium",
+    "latitude": "454545",
+    "longitude": "434343"
+  }
+]

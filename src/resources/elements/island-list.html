@@ -1,0 +1,24 @@
+<template>
+   <div class="ui segment">
+    <div class="ui grid">
+      <table class="ui fixed celled table">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Categories</th>
+          <th>Location</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr repeat.for="island of islands">
+          <td> ${island.name} </td>
+          <td> ${island.category.name} </td>
+          <td> Lat.: ${island.latitude}, <br />Long.: ${island.longitude} </td>
+          <td> <a href="/details/${island._id}">See more...</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,21 @@
+[
+  {
+    "firstName": "User",
+    "lastName": "Simpson",
+    "email": "user@island.com",
+    "password": "secret"
+  },
+  {
+    "firstName": "Admin",
+    "lastName": "Admin",
+    "email": "admin@island.com",
+    "isAdmin": 1,
+    "password": "secret"
+  },
+  {
+    "firstName": "Bart",
+    "lastName": "Simpson",
+    "email": "bart@simpson.com",
+    "password": "secret"
+  }
+]
