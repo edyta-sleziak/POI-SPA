@@ -15,7 +15,7 @@
           <td> ${island.name} </td>
           <td> ${island.category.name} </td>
           <td> Lat.: ${island.latitude}, <br />Long.: ${island.longitude} </td>
-          <td> <a href="/details/${island._id}">See more...</a></td>
+          <td> <button class="ui button" click.delegate = "seeDetails(island._id)">See more...</button></td>
         </tr>
         </tbody>
       </table>

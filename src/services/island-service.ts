@@ -74,21 +74,23 @@ export class IslandService {
     //this.ea.publish(new Marker(this.total, newIsland))
   }
 
+  async getIslandData(id: string) {
+    const response = await this.httpClient.get('/api/poi/' + id);
+    return response.content;
+  }
+
+  displayIslandData(id: string) {
+    //todo
+  }
+
   async getUsersIslands(userId: string) {
     const id = userId;
     const response = await this.httpClient.get('/api/poi/'+id+'/userAdded');
     return response.content;
   }
 
-  async editUser(firstName: string, lastName: string, password: string) {
-    const newDetails = {
-      firstName: firstName,
-      lastName: lastName,
-      password: password
-    };
-    const responseUser = await this.httpClient.get('/api/user/getLoggedUserData');
-    const id = responseUser.content._id;
-    const response = await this.httpClient.put('/api/user/'+id, newDetails);
+  async editUser(user: User) {
+    const response = await this.httpClient.put('/api/user/editUser', user);
     return response.content;
   }
 
