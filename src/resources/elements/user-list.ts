@@ -1,7 +1,7 @@
 import { bindable } from 'aurelia-framework';
 import { inject } from 'aurelia-framework';
 import { User, Island, Category } from '../../services/poi-interfaces';
-import {IslandService} from "../../services/island-service";
+import { IslandService } from "../../services/island-service";
 
 @inject(IslandService)
 export class UserList {

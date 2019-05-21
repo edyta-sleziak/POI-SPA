@@ -86,8 +86,10 @@ export class IslandService {
       lastName: lastName,
       password: password
     };
-    //const response = await this.httpClient.put('/api/user/update', newDetails); //to do on server side
-    //return response.content;
+    const responseUser = await this.httpClient.get('/api/user/getLoggedUserData');
+    const id = responseUser.content._id;
+    const response = await this.httpClient.put('/api/user/'+id, newDetails);
+    return response.content;
   }
 
   async deleteUser(user: User) {

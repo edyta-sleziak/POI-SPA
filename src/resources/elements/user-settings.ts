@@ -5,6 +5,9 @@ import {IslandService} from "../../services/island-service";
 
 @inject(IslandService)
 export class UserSettings {
+  firstName: string;
+  lastName: string;
+  password: string;
   @bindable
   user: User;
 
@@ -18,7 +21,7 @@ export class UserSettings {
   }
 
   async updateSettings() {
-    await this.ds.editUser(this.user.firstName, this.user.lastName, this.user.password);
+    await this.ds.editUser(this.firstName, this.lastName, this.password);
     console.log('User updated');
   }
 
