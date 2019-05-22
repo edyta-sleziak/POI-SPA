@@ -42,6 +42,7 @@ export class IslandService {
         lastModifiedDate: rawIsland.lastModifiedDate,
         _id: rawIsland._id
       };
+      this.ea.publish('showMarkers', island);
       this.islands.push(island);
     });
   }
@@ -71,7 +72,7 @@ export class IslandService {
     const response = await this.httpClient.post('/api/poi', newIsland);
     this.islands.push(newIsland);
     //this.total = this.total+1;
-    //this.ea.publish(new Marker(this.total, newIsland))
+    this.ea.publish('showMarkers',newIsland);
   }
 
   async getIslandData(id: string) {
@@ -137,7 +138,7 @@ export class IslandService {
       });
       console.log(status.token);
       localStorage.poi = JSON.stringify(response.content);
-      await this.getIslands();
+      //await this.getIslands();
       await this.getUsers();
       await this.getCategories();
       this.changeRouter(PLATFORM.moduleName('app'));

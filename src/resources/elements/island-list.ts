@@ -10,6 +10,7 @@ export class IslandList {
   islands: Island[];
 
   constructor(private ds: IslandService, private ea: EventAggregator) {
+    ds.getIslands();
   }
 
   async seeDetails(id: string) {
