@@ -3,14 +3,15 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { LeafletMap } from '../../services/leaflet-map';
 import { Island } from '../../services/poi-interfaces';
 import { Marker } from '../../services/ea-service';
+import { IslandService } from "../../services/island-service";
 
-@inject(EventAggregator)
+@inject(IslandService, EventAggregator)
 export class IslandMap {
   mapId = 'island-map';
   mapHeight = 300;
   map: LeafletMap;
 
-  constructor(private ea: EventAggregator) {
+  constructor(private ds: IslandService, private ea: EventAggregator) {
     ea.subscribe('showMarkers', (msg) => {
       this.renderIsland(msg);
     })
@@ -18,10 +19,16 @@ export class IslandMap {
 
   renderIsland (island: Island) {
     if(this.map) {
-      const description  = island.name;
+      const description  = '<h3>' + island.name + '</h3><button class="ui button" click.delegate = "seeDetails(island._id)">See more...</button>';
       this.map.addMarker(parseFloat(island.latitude), parseFloat(island.longitude), description);
       //this.map.moveTo(6, parseInt(island.latitude), parseInt(island.longitude));
     }
+  }
+
+  async seeDetails(id: string) {
+    console.log('displaying details of island no. ' + id);
+    const selectedIsland = await this.ds.getIslandData(id);
+    this.ea.publish('IslandClicked', selectedIsland);
   }
 
   attached() {
