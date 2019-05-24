@@ -6,18 +6,24 @@
   <require from="../resources/elements/island-edit"></require>
 
   <div class="ui container">
-    <div class="ui segment">
-    <island-map></island-map>
-      <island-form name.bind="name", category.bind="category"></island-form>
-      <div class="ui stacked segment">
+    <div class="ui grid">
+      <div class="eleven wide column">
+        <island-map></island-map>
+      </div>
+      <div class="five wide column">
+        <island-form name.bind="name", category.bind="category"></island-form>
+      </div>
+    </div>
+    <div if.bind="isVisible">
+      <div if.bind="!isEditable" class="ui stacked segment">
         <island-details></island-details>
       </div>
-      <div class="ui stacked segment">
+      <div else class="ui stacked segment">
         <island-edit></island-edit>
       </div>
-      <div class="ui stacked segment">
-        <island-list islands.bind="islands"></island-list>
-      </div>
+    </div>
+    <div class="ui stacked segment">
+      <island-list islands.bind="islands"></island-list>
     </div>
   </div>
 </template>

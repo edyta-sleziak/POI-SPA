@@ -17,5 +17,6 @@ export class IslandList {
     console.log('displaying details of island no. ' + id);
     const selectedIsland = await this.ds.getIslandData(id);
     this.ea.publish('IslandClicked', selectedIsland);
+    this.ea.publish('showIslandPanel', true);
   }
 }

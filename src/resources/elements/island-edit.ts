@@ -9,7 +9,6 @@ export class IslandEdit {
   @bindable
   island: Island;
   user: User;
-  isEditable: boolean;
 
   constructor(private ds: IslandService, private ea: EventAggregator) {
     const data = this.ea.subscribe('EditIsland', response => {
@@ -23,10 +22,11 @@ export class IslandEdit {
     const selectedIsland = await this.ds.getIslandData(this.island._id);
     this.ea.publish('IslandClicked', selectedIsland);
     this.island = null;
-    this.isEditable = false;
+    this.ea.publish('showEditScreen', false);
   }
   async cancelChanges() {
     this.island = null;
-    this.isEditable = false;
+    this.ea.publish('showEditScreen', false);
+
   }
 }
