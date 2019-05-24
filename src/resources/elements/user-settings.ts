@@ -25,6 +25,7 @@ export class UserSettings {
 
   async deleteAccount() {
     await this.ds.deleteUser(this.user);
+    await this.ds.logout();
     console.log('deleting account');
   }
 }

@@ -14,7 +14,11 @@ export class IslandForm {
 
   constructor (private ds: IslandService) {}
 
-  addNewIsland() {
-    this.ds.quickAddIsland(this.name, this.category, this.latitude, this.longitude);
+  async addNewIsland() {
+    await this.ds.quickAddIsland(this.name, this.category, this.latitude, this.longitude);
+    this.name = '';
+    this.category = null;
+    this.latitude = '';
+    this.longitude = '';
   }
 }

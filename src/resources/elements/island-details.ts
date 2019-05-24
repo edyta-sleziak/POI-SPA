@@ -1,6 +1,6 @@
 import { bindable } from 'aurelia-framework';
 import { inject } from 'aurelia-framework';
-import { Island, User } from '../../services/poi-interfaces';
+import { Island, User, RawIsland } from '../../services/poi-interfaces';
 import { IslandService } from "../../services/island-service";
 import { EventAggregator } from 'aurelia-event-aggregator';
 
@@ -21,12 +21,13 @@ export class IslandDetails {
   }
 
   async updateIslandDetails() {
-    //await this.ds.editIsland(this.island);
-    console.log('Island updated');
+    const selectedIsland = await this.ds.getIslandData(this.island._id);
+    this.ea.publish('EditIsland', selectedIsland);
+    console.log('Request to edit island ' + selectedIsland.name);
   }
 
   async deleteIsland() {
-    //await this.ds.deleteIsland(this.island);
-    console.log('deleting island');
+    await this.ds.deleteIsland(this.island._id);
+    this.island = null;
   }
 }

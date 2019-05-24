@@ -28,21 +28,21 @@ export class IslandService {
 
   async getIslands() {
     const response = await this.httpClient.get('/api/poi');
-    const rawIslands: RawIsland[] = await response.content;
-    rawIslands.forEach(rawIsland => {
-      const island = {
-        name: rawIsland.name,
-        description : rawIsland.description,
-        longitude: rawIsland.longitude,
-        latitude: rawIsland.latitude,
-        category: this.categories.find(category => rawIsland.category == category._id),
-        addedBy :this.users.get(rawIsland.addedBy),
-        modifiedBy :this.users.get(rawIsland.modifiedBy),
-        createdDate: rawIsland.createdDate,
-        lastModifiedDate: rawIsland.lastModifiedDate,
-        _id: rawIsland._id
+    const islands = await response.content;
+    islands.forEach(island => {
+      const newIsland = {
+        name: island.name,
+        description : island.description,
+        longitude: island.longitude,
+        latitude: island.latitude,
+        category: this.categories.find(category => island.category == category._id),
+        addedBy :this.users.get(island.addedBy),
+        modifiedBy :this.users.get(island.modifiedBy),
+        createdDate: island.createdDate,
+        lastModifiedDate: island.lastModifiedDate,
+        _id: island._id
       };
-      this.ea.publish('showMarkers', island);
+      this.ea.publish('showMarkers', newIsland);
       this.islands.push(island);
     });
   }
@@ -67,7 +67,7 @@ export class IslandService {
       name: name,
       category: category,
       latitude: latitude,
-      longitude: longitude
+      longitude: longitude,
     };
     const response = await this.httpClient.post('/api/poi', newIsland);
     this.islands.push(newIsland);
@@ -75,13 +75,20 @@ export class IslandService {
     this.ea.publish('showMarkers',newIsland);
   }
 
-  async getIslandData(id: string) {
-    const response = await this.httpClient.get('/api/poi/' + id);
+  async editIsland(island: Island) {
+    const response = await this.httpClient.put('/api/poi/' + island._id, island);
+    console.log (response.content);
     return response.content;
   }
 
-  displayIslandData(id: string) {
-    //todo
+  async deleteIsland(id: string) {
+    const response = await this.httpClient.delete('/api/poi/'+ id);
+    return response.content
+  }
+
+  async getIslandData(id: string) {
+    const response = await this.httpClient.get('/api/poi/' + id);
+    return response.content;
   }
 
   async getUsersIslands(userId: string) {
@@ -111,7 +118,11 @@ export class IslandService {
     const newUser = await response.content;
     this.users.set(newUser.email, newUser);
     this.usersById.set(newUser._id, newUser);
-    loggedUser = newUser;
+    this.httpClient.configure(configuration => {
+      configuration.withHeader('Authorization', 'bearer ' + newUser.token);
+    });
+    console.log(newUser.token);
+    localStorage.poi = JSON.stringify(response.content);
     this.changeRouter(PLATFORM.moduleName('app'));
     return false;
   }

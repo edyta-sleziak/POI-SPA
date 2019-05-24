@@ -1,5 +1,5 @@
 <template>
-  <button class="ui button" click.delegate = "editIslandDetails()"><i class="pencil alternate icon"></i>Edit</button>
+  <button class="ui button" click.delegate = "updateIslandDetails()"><i class="pencil alternate icon"></i>Edit</button>
   <button class="ui button" click.delegate = "deleteIsland()"><i class="trash icon"></i>Remove</button>
   <div class="ui divider"></div>
   <h1 class="ui center aligned header">${island.name}</h1>
@@ -18,7 +18,7 @@
     <tbody>
     <tr>
       <td class="two wide column">Categories</td>
-      <td>${island.category.name}</td>
+      <td>${island.category}</td>
     </tr>
     <tr>
       <td>Latitude</td>

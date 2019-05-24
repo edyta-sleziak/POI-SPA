@@ -24,15 +24,15 @@ export interface Island {
 
 export interface RawIsland {
   name: string;
-  description: string;
-  addedBy: string;
-  modifiedBy: string;
+  description?: string;
+  addedBy?: string;
+  modifiedBy?: string;
   longitude: string;
   latitude: string;
   category: string;
-  createdDate: string;
-  lastModifiedDate: string;
-  _id: string;
+  createdDate?: string;
+  lastModifiedDate?: string;
+  _id?: string;
 }
 
 export interface Category {

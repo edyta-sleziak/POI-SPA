@@ -3,8 +3,8 @@ import { IslandService } from '../services/island-service';
 
 @inject(IslandService)
 export class Login {
-  email = 'admin@admin';
-  password = 'admin';
+  email = 'marge@simpson.com';
+  password = '1234';
   prompt = '';
 
   constructor(private ds: IslandService) {}

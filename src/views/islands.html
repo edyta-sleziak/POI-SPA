@@ -3,6 +3,7 @@
   <require from="../resources/elements/island-list"></require>
   <require from="../resources/elements/island-details"></require>
   <require from="../resources/elements/island-map"></require>
+  <require from="../resources/elements/island-edit"></require>
 
   <div class="ui container">
     <div class="ui segment">
@@ -10,6 +11,9 @@
       <island-form name.bind="name", category.bind="category"></island-form>
       <div class="ui stacked segment">
         <island-details></island-details>
+      </div>
+      <div class="ui stacked segment">
+        <island-edit></island-edit>
       </div>
       <div class="ui stacked segment">
         <island-list islands.bind="islands"></island-list>
