@@ -40,3 +40,11 @@ export interface Category {
   _id: string;
 }
 
+export interface Review {
+  _id: string;
+  island: string;
+  reviewText: string;
+  addedBy: string;
+  dateAdded: string;
+}
+

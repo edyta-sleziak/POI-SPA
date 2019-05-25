@@ -6,12 +6,14 @@
   <require from="../resources/elements/island-edit"></require>
 
   <div class="ui container">
-    <div class="ui grid">
-      <div class="eleven wide column">
-        <island-map></island-map>
-      </div>
-      <div class="five wide column">
-        <island-form name.bind="name", category.bind="category"></island-form>
+    <div class="ui stacked segment">
+      <div class="ui grid">
+        <div class="eleven wide column">
+          <island-map></island-map>
+        </div>
+        <div class="five wide column">
+          <island-form name.bind="name", category.bind="category"></island-form>
+        </div>
       </div>
     </div>
     <div if.bind="isVisible">

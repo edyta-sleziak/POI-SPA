@@ -4,6 +4,10 @@
   <div class="ui divider"></div>
   <h1 class="ui center aligned header">${island.name}</h1>
   <h4 class="ui horizontal divider header">
+    <i class="globe icon"></i>
+    Rating
+  </h4>
+  <h4 class="ui horizontal divider header">
     <i class="file alternate outline icon"></i>
     Description
   </h4>
@@ -52,4 +56,11 @@
     Modified by: ${island.modifiedBy}
     on: ${island.lastModifiedDate}<br />
   </p>
+
+  <h4 class="ui horizontal divider header">
+    <i class="globe icon"></i>
+    Reviews
+  </h4>
+  <review-form></review-form>
+  <review-list></review-list>
 </template>

@@ -159,6 +159,20 @@ export class IslandService {
     }
   }
 
+  async getReviews(id: String) {
+    try {
+      const response = await this.httpClient.get('/api/review/' + id + '/island');
+      return response.content;
+    }
+    catch {
+      console.log('Error occurred');
+    }
+  }
+
+  async addReview(reviewText: string) {
+    //
+  }
+
   logout() {
     localStorage.poi = null;
     this.httpClient.configure(configuration => {

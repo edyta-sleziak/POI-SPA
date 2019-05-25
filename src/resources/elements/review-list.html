@@ -1,0 +1,18 @@
+<template>
+  <div class="ui segment">
+    <div class="ui grid">
+      <table class="ui fixed celled table">
+        <tbody>
+        <tr repeat.for="review of reviews">
+          <td>
+            <p>
+             ${review.addedBy} on ${review.dateAdded}<br />
+            <i>${review.reviewText}</i>
+            </p>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</template>
