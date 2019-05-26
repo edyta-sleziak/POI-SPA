@@ -23,11 +23,8 @@
         <tr>
           <td class="two wide column">Categories</td>
           <td>
-            <select class="ui dropdown" name="category">
-              <option value.bind="island.category">${island.category}</option>
-              {{#each categories}}
-              <option value="name">${category.name}</option>
-              {{/each}}
+            <select class="ui dropdown" name="category" value.bind="island.category">
+              <option repeat.for="category of categories" model.bind="category._id">${category.name}</option>
             </select>
           </td>
         </tr>

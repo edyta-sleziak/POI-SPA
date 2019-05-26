@@ -1,6 +1,6 @@
 import { bindable } from 'aurelia-framework';
 import { inject } from 'aurelia-framework';
-import { Island, User, RawIsland } from '../../services/poi-interfaces';
+import { Island, Category, User } from '../../services/poi-interfaces';
 import { IslandService } from "../../services/island-service";
 import { EventAggregator } from 'aurelia-event-aggregator';
 
@@ -8,14 +8,13 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 export class IslandDetails {
   @bindable
   island: Island;
-  user: User;
 
   constructor(private ds: IslandService, private ea: EventAggregator) {
     this.getIslandData();
   }
 
   async getIslandData() {
-    const data = this.ea.subscribe('IslandClicked', response => {
+    const data = await this.ea.subscribe('IslandClicked', response => {
       this.island = response;
     });
   }
@@ -23,15 +22,15 @@ export class IslandDetails {
   async updateIslandDetails() {
     const selectedIsland = await this.ds.getIslandData(this.island._id);
     const isEditable = true;
+    await this.ea.publish('showEditScreen', true);
     this.ea.publish('EditIsland', selectedIsland);
-    this.ea.publish('showEditScreen', true);
     console.log('Request to edit island ' + selectedIsland.name);
 
   }
 
   async deleteIsland() {
     await this.ds.deleteIsland(this.island._id);
-    this.ea.publish('showEditScreen', false);
+    await this.ea.publish('showEditScreen', false);
     this.island = null;
     this.ea.publish('showIslandPanel', false);
   }

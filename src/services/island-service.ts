@@ -1,9 +1,9 @@
 import { inject, Aurelia } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { PLATFORM } from 'aurelia-pal';
-import { User, Island, Category, RawIsland } from './poi-interfaces';
+import { User, Island, Category } from './poi-interfaces';
 import { HttpClient } from 'aurelia-http-client';
-import { Marker } from './ea-service';
+//import { Marker } from './ea-service';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
 let loggedUser = null;
@@ -29,20 +29,14 @@ export class IslandService {
   async getIslands() {
     const response = await this.httpClient.get('/api/poi');
     const islands = await response.content;
+    await this.getCategories();
     islands.forEach(island => {
-      const newIsland = {
-        name: island.name,
-        description : island.description,
-        longitude: island.longitude,
-        latitude: island.latitude,
-        category: this.categories.find(category => island.category == category._id),
-        addedBy :this.users.get(island.addedBy),
-        modifiedBy :this.users.get(island.modifiedBy),
-        createdDate: island.createdDate,
-        lastModifiedDate: island.lastModifiedDate,
-        _id: island._id
-      };
-      this.ea.publish('showMarkers', newIsland);
+      try {
+        island.categoryName = (this.categories.find(category => island.category == category._id)).name;
+      } catch (e) {
+        island.categoryName = '[UNKNOWN]';
+      }
+      this.ea.publish('showMarkers', island);
       this.islands.push(island);
     });
   }
@@ -59,19 +53,19 @@ export class IslandService {
   async getCategories() {
     const response = await this.httpClient.get('/api/category');
     this.categories = await response.content;
-    console.log (this.categories);
   }
 
-  async quickAddIsland(name: string, category: Category, latitude: string, longitude: string) {
-    const newIsland = {
+  async quickAddIsland(name: string, category: string, latitude: string, longitude: string) {
+    let newIsland = {
       name: name,
       category: category,
       latitude: latitude,
       longitude: longitude,
     };
     const response = await this.httpClient.post('/api/poi', newIsland);
+    newIsland = response.content;
     this.islands.push(newIsland);
-    //this.total = this.total+1;
+    //this.getIslands();
     this.ea.publish('showMarkers',newIsland);
   }
 
@@ -88,6 +82,16 @@ export class IslandService {
 
   async getIslandData(id: string) {
     const response = await this.httpClient.get('/api/poi/' + id);
+    return response.content;
+  }
+
+  async getCategoryById(id: string) {
+    const response = await this.httpClient.get('/api/category/' + id);
+    return response.content;
+  }
+
+  async getUserNameById(id: string) {
+    const response = await this.httpClient.get('/api/getUserName/' + id);
     return response.content;
   }
 
@@ -116,14 +120,8 @@ export class IslandService {
     };
     const response = await this.httpClient.post('/api/user', user);
     const newUser = await response.content;
-    this.users.set(newUser.email, newUser);
-    this.usersById.set(newUser._id, newUser);
-    this.httpClient.configure(configuration => {
-      configuration.withHeader('Authorization', 'bearer ' + newUser.token);
-    });
-    console.log(newUser.token);
-    localStorage.poi = JSON.stringify(response.content);
-    this.changeRouter(PLATFORM.moduleName('app'));
+    console.log( response);
+    await this.login(newUser.email, user.password);
     return false;
   }
 

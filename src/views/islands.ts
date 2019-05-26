@@ -1,5 +1,5 @@
 import { inject } from 'aurelia-framework';
-import { Island } from '../services/poi-interfaces';
+import { Island, Category } from '../services/poi-interfaces';
 import { IslandService } from '../services/island-service';
 import { EventAggregator } from 'aurelia-event-aggregator';
 

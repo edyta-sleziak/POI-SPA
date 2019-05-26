@@ -5,19 +5,28 @@ import {IslandService} from "../../services/island-service";
 
 @inject(IslandService)
 export class IslandForm {
+  @bindable
   name: string;
-  category: Category;
+  category: string;
   latitude: string;
   longitude: string;
-  @bindable
   islands: Island[];
+  categories: Category[];
 
-  constructor (private ds: IslandService) {}
+  constructor(private ds: IslandService) {
+    this.populateCategories();
+  }
+
+  async populateCategories() {
+    await this.ds.getCategories();
+    this.categories = this.ds.categories;
+    console.log(this.categories);
+  }
 
   async addNewIsland() {
-    await this.ds.quickAddIsland(this.name, this.category, this.latitude, this.longitude);
+    const data = await this.ds.quickAddIsland(this.name, this.category, this.latitude, this.longitude);
     this.name = '';
-    this.category = null;
+    this.category = '';
     this.latitude = '';
     this.longitude = '';
   }

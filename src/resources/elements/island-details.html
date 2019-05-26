@@ -22,7 +22,7 @@
     <tbody>
     <tr>
       <td class="two wide column">Categories</td>
-      <td>${island.category}</td>
+      <td>${island.categoryName}</td>
     </tr>
     <tr>
       <td>Latitude</td>
@@ -51,10 +51,8 @@
   </script>
   <div class="ui divider"></div>
   <p>
-    Added by: ${island.addedBy} on
-    on: ${island.createdDate}<br />
-    Modified by: ${island.modifiedBy}
-    on: ${island.lastModifiedDate}<br />
+    Added by: ${island.addedByName} on ${island.createdDate}<br />
+    Modified by: ${island.modifiedByName} on ${island.lastModifiedDate}<br />
   </p>
 
   <h4 class="ui horizontal divider header">

@@ -12,11 +12,11 @@ export interface User {
 export interface Island {
   name: string;
   description?: string;
-  addedBy?: User;
-  modifiedBy?: User;
+  addedBy?: string;
+  modifiedBy?: string;
   longitude?: string;
   latitude?: string;
-  category?: Category;
+  category?: string;
   createdDate?: string;
   lastModifiedDate?: string;
   _id?: string;

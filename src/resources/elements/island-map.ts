@@ -19,7 +19,8 @@ export class IslandMap {
 
   renderIsland (island: Island) {
     if(this.map) {
-      const description  = '<h3>' + island.name + '</h3><button class="ui button" click.delegate = "seeDetails(island._id)">See more...</button>';
+      //const description  = '<h3>' + island.name + '</h3><button class="ui button au-target" click.delegate = "seeDetails(island._id)">See more...</button>';
+      const description  = '<h3>' + island.name + '</h3><button class="ui button au-target" click.delegate = "seeDetails(island._id)">See more...</button>';
       this.map.addMarker(parseFloat(island.latitude), parseFloat(island.longitude), description);
       //this.map.moveTo(6, parseInt(island.latitude), parseInt(island.longitude));
     }
@@ -28,6 +29,7 @@ export class IslandMap {
   async seeDetails(id: string) {
     console.log('displaying details of island no. ' + id);
     const selectedIsland = await this.ds.getIslandData(id);
+    await this.ea.publish('showIslandPanel', true);
     this.ea.publish('IslandClicked', selectedIsland);
   }
 

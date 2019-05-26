@@ -34,7 +34,7 @@ export class LeafletMap {
       defaultLayer = this.baseLayers[activeLayer];
     }
     this.imap = L.map(id, {
-      center: [descriptor.latitude, descriptor.longitude], //todo sprawdz
+      center: [descriptor.latitude, descriptor.longitude],
       zoom: descriptor.zoom,
       minZoom: descriptor.minZoom,
       zoomControl: false,
