@@ -1,7 +1,7 @@
 import { inject, Aurelia } from 'aurelia-framework';
 import { Router } from 'aurelia-router';
 import { PLATFORM } from 'aurelia-pal';
-import { User, Island, Category } from './poi-interfaces';
+import { User, Island, Category, Review } from './poi-interfaces';
 import { HttpClient } from 'aurelia-http-client';
 //import { Marker } from './ea-service';
 import { EventAggregator } from 'aurelia-event-aggregator';
@@ -12,6 +12,7 @@ let loggedUser = null;
 export class IslandService {
   islands: Island[] = [];
   categories: Category[] = [];
+  reviews: Review[] = [];
   users: Map<string, User> = new Map();
   usersById: Map<string, User> = new Map();
 
@@ -59,13 +60,18 @@ export class IslandService {
     let newIsland = {
       name: name,
       category: category,
+      categoryName: '',
       latitude: latitude,
       longitude: longitude,
     };
     const response = await this.httpClient.post('/api/poi', newIsland);
     newIsland = response.content;
+    try {
+      newIsland.categoryName = (this.categories.find(category => newIsland.category == category._id)).name;
+    } catch (e) {
+      newIsland.categoryName = '[UNKNOWN]';
+    }
     this.islands.push(newIsland);
-    //this.getIslands();
     this.ea.publish('showMarkers',newIsland);
   }
 
@@ -147,7 +153,6 @@ export class IslandService {
       });
       console.log(status.token);
       localStorage.poi = JSON.stringify(response.content);
-      //await this.getIslands();
       await this.getUsers();
       await this.getCategories();
       this.changeRouter(PLATFORM.moduleName('app'));
@@ -160,15 +165,28 @@ export class IslandService {
   async getReviews(id: String) {
     try {
       const response = await this.httpClient.get('/api/review/' + id + '/island');
-      return response.content;
+      const reviews = await response.content;
+
+      this.reviews = [];
+
+      for (const review of reviews) {
+        review.addedByName = await this.getUserNameById(review.addedBy);
+        this.reviews.push(review);
+      }
     }
     catch {
       console.log('Error occurred');
     }
   }
 
-  async addReview(reviewText: string) {
-    //
+  async addReview(reviewText: string, island: string) {
+    const request = {
+      reviewText: reviewText,
+      island: island
+    };
+    const response = await this.httpClient.post('/api/review', request);
+    const newReview = response.content;
+    this.reviews.push(newReview);
   }
 
   logout() {

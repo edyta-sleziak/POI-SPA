@@ -19,10 +19,10 @@ export class IslandList {
     const category = await this.ds.getCategoryById(selectedIsland.category);
     selectedIsland.categoryName = category.name;
     selectedIsland.addedByName = await this.ds.getUserNameById(selectedIsland.addedBy);
-    //selectedIsland.createdDate = 'TODO'; //TODO
     selectedIsland.modifiedByName = await this.ds.getUserNameById(selectedIsland.modifiedBy);
-    //selectedIsland.lastModifiedDate = 'TODO'; //TODO
+    await this.ds.getReviews(selectedIsland._id);
     await this.ea.publish('showIslandPanel', true);
     this.ea.publish('IslandClicked', selectedIsland);
+    //this.reviews = this.ds.reviews;
   }
 }
